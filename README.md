@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/rowlinsonmike/gaia/main/docs/docs/assets/logo.svg" alt="GAIA" width="200">
+  <img src="https://raw.githubusercontent.com/rowlinsonmike/gaia/main/docs/assets/logo.svg" alt="GAIA" width="200">
   <br>
   GAIA
   <br>
