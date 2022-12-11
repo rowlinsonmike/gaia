@@ -69,6 +69,7 @@ export default function Project() {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Creation Date</TableCell>
+              <TableCell>Created By</TableCell>
               <TableCell>Status</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
@@ -83,6 +84,7 @@ export default function Project() {
                   {row.name}
                 </TableCell>
                 <TableCell>{row.create}</TableCell>
+                <TableCell>{row.created_by}</TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell align="center">
                   <IconButton onClick={goToJob(row.pk)}>

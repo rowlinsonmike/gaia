@@ -7,9 +7,17 @@ from datetime import datetime
 import flask_praetorian
 import traceback
 import secrets
+
+def current_user():
+    return flask_praetorian.current_user().username
+
+def created_by():
+    return {"created_by":current_user()}
+
 def main(guard):
     bp = Blueprint('main', __name__)
     @bp.route('/users', methods=['GET'])
+    @flask_praetorian.auth_required
     def get_users():
         try:
             users = list(filter(lambda x: x["username"] != 'gaia',current_app.extensions["dynamo"].table.query(f":USR")))
@@ -18,6 +26,7 @@ def main(guard):
         except:
             return jsonify(error="unable to get users"),400
     @bp.route('/users/<id>', methods=['DELETE'])
+    @flask_praetorian.auth_required
     def delete_user(id):
         try:
             current_app.extensions["dynamo"].table.delete(f"{id}:USR")
@@ -25,6 +34,7 @@ def main(guard):
         except:
             return jsonify(error="unable to delete user"),400
     @bp.route('/users', methods=['POST'])
+    @flask_praetorian.auth_required
     def add_user():
         req = request.get_json(force=True)
         username = req.get('username', "")
@@ -34,7 +44,7 @@ def main(guard):
             return jsonify(error="gaia reserved"),400
         password = req.get('password', "") 
         id = req.get('id', secrets.token_urlsafe()) 
-        current_app.extensions["dynamo"].table.load(f"{id}:USR",username=username,first=first,last=last,password=guard.hash_password(password),data=id)
+        current_app.extensions["dynamo"].table.load(f"{id}:USR",username=username,first=first,last=last,password=guard.hash_password(password),data=id,**created_by())
         return jsonify(id=id),200
     @bp.route('/users/reset', methods=['POST'])
     @flask_praetorian.auth_required
@@ -59,6 +69,7 @@ def main(guard):
         ret = {"access_token": guard.encode_jwt_token(user,**custom_claims)}
         return ret, 200
     @bp.route('/project',methods=['POST'])
+    @flask_praetorian.auth_required
     def create_project():
         req = request.get_json(force=True)
         name = req["name"]
@@ -67,29 +78,33 @@ def main(guard):
         now = datetime.now()
         date = now.strftime("%Y-%m-%d %H:%M:%S")
         id = secrets.token_urlsafe()
-        current_app.extensions["dynamo"].table.update(f"{id}:PRO",data=id, date=date,name=name,repo=repo,path=path)
+        current_app.extensions["dynamo"].table.update(f"{id}:PRO",data=id, date=date,name=name,repo=repo,path=path,**created_by())
         return jsonify(id=id),200
     @bp.route('/project/<id>',methods=['GET'])
+    @flask_praetorian.auth_required
     def get_project(id):
         project = current_app.extensions["dynamo"].table.query(f"{id}:PRO")[0]
         jobs = current_app.extensions["dynamo"].table.query(f":JOB:{id}")
         return jsonify(project=project,jobs=jobs),200
     @bp.route('/project/<id>',methods=['DELETE'])
+    @flask_praetorian.auth_required
     def delete_project(id):
         project = current_app.extensions["dynamo"].table.delete(f"{id}:PRO")
         return jsonify(success=True),200
     @bp.route('/project',methods=['GET'])
+    @flask_praetorian.auth_required
     def list_projects():
         pros = current_app.extensions["dynamo"].table.query(f":PRO")
         return jsonify(projects=pros),200
     @bp.route('/scan/<pro>',methods=['POST'])
+    @flask_praetorian.auth_required
     def scan(pro):
         req = request.get_json(force=True)
         name = req["name"]        
         now = datetime.now()
         create = now.strftime("%Y-%m-%d %H:%M:%S")
         id = secrets.token_urlsafe()
-        current_app.extensions["dynamo"].table.update(f"{id}:JOB",create=create,name=name,data=pro, status="queued")
+        current_app.extensions["dynamo"].table.update(f"{id}:JOB",create=create,name=name,data=pro, status="queued",**created_by())
         job = current_app.extensions["queue"].enqueue(
             "gaia.start_scan",
             job_timeout="1h",
@@ -97,6 +112,7 @@ def main(guard):
         )
         return jsonify(id=id), 200
     @bp.route('/rescan/<pro>/<id>',methods=['POST'])
+    @flask_praetorian.auth_required
     def rescan(pro,id):
         current_app.extensions["dynamo"].table.update(f"{id}:JOB",status="queued")
         job = current_app.extensions["queue"].enqueue(
@@ -106,13 +122,14 @@ def main(guard):
         )
         return jsonify(id=id), 200
     @bp.route('/job',methods=['POST'])
+    @flask_praetorian.auth_required
     def run_job():
         """
         """
         id = request.args.get("id")
         job_d = current_app.extensions["dynamo"].table.query(f"{id}:JOB")[0]
         job_d["status"] = "queued"
-        current_app.extensions["dynamo"].table.update(f"{id}:JOB", status="queued")
+        current_app.extensions["dynamo"].table.update(f"{id}:JOB", status="queued",applied_by=current_user())
         job = current_app.extensions["queue"].enqueue(
             "gaia.start_apply",
             job_timeout="1h",
@@ -120,6 +137,7 @@ def main(guard):
         )
         return jsonify(**job_d),200
     @bp.route('/job',methods=['DELETE'])
+    @flask_praetorian.auth_required
     def delete_job():
         id = request.args.get("id")
         current_app.extensions["dynamo"].table.delete(f"{id}:JOB")

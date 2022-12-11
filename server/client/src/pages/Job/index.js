@@ -105,22 +105,28 @@ export default function Job() {
         <Button
           disabled={!data?.graph}
           onClick={() => {
-            navigator.clipboard.writeText(data?.graph);
-            toast.custom(
-              <div>
-                Graph data copied to clipboard! View in{" "}
-                <a
-                  style={{ color: "#75D701" }}
-                  target="_blank"
-                  href="https://mermaid-js.github.io/docs/mermaid-live-editor-beta/#/edit/"
-                >
-                  Mermaid live editor!
-                </a>
-              </div>,
-              {
-                duration: 3000,
-              }
-            );
+            try {
+              navigator.clipboard.writeText(data?.graph);
+              toast.custom(
+                <div>
+                  Graph data copied to clipboard! View in{" "}
+                  <a
+                    style={{ color: "#75D701" }}
+                    target="_blank"
+                    href="https://mermaid-js.github.io/docs/mermaid-live-editor-beta/#/edit/"
+                  >
+                    Mermaid live editor!
+                  </a>
+                </div>,
+                {
+                  duration: 3000,
+                }
+              );
+            } catch (e) {
+              toast.error(
+                "Enable this function by running GAIA behind HTTPS or overriding your browser's security."
+              );
+            }
           }}
           variant="contained"
         >
@@ -144,6 +150,8 @@ export default function Job() {
               <TableCell>Project Name</TableCell>
               <TableCell>Project Repo</TableCell>
               <TableCell>Project Path</TableCell>
+              <TableCell>Created By</TableCell>
+              <TableCell>Applied By</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -153,6 +161,8 @@ export default function Job() {
               <TableCell>{project?.project?.name}</TableCell>
               <TableCell>{project?.project?.repo}</TableCell>
               <TableCell>{project?.project?.path || "root"}</TableCell>
+              <TableCell>{data?.created_by}</TableCell>
+              <TableCell>{data?.applied_by || "-"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

@@ -60,6 +60,7 @@ export default function Users() {
               <TableCell>Username</TableCell>
               <TableCell>First</TableCell>
               <TableCell>Last</TableCell>
+              <TableCell>Created By</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -74,6 +75,7 @@ export default function Users() {
                 </TableCell>
                 <TableCell>{user.first}</TableCell>
                 <TableCell>{user.last}</TableCell>
+                <TableCell>{user.created_by}</TableCell>
                 <TableCell align="center">
                   <IconButton onClick={deleteUser(user.pk)} color="error">
                     <Icon color="error">clear</Icon>

@@ -57,6 +57,7 @@ export default function Projects() {
               <TableCell>Repo</TableCell>
               <TableCell>Path</TableCell>
               <TableCell>Date</TableCell>
+              <TableCell>Created By</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -74,6 +75,7 @@ export default function Projects() {
                 </TableCell>
                 <TableCell>{row?.path || "root"}</TableCell>
                 <TableCell>{row.date}</TableCell>
+                <TableCell>{row.created_by}</TableCell>
                 <TableCell align="center">
                   <IconButton onClick={goToProject(row.pk)}>
                     <Icon>arrow_forward</Icon>
