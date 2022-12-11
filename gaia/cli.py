@@ -33,6 +33,8 @@ def scan(
     subprocess.run(['git','clone',f'codecommit://{repo}', repo_d], stdout=subprocess.PIPE)
     #terraform init
     result = subprocess.run(['terraform','init'], cwd=pro_p, stdout=subprocess.PIPE)
+  else:
+    subprocess.run(['git','pull'],cwd=pro_p, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
   #tflint
   result = subprocess.run(['tflint','--format','json', pro_p], stdout=subprocess.PIPE)
   tflint_d = json.loads(result.stdout)
