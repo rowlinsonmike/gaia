@@ -14,7 +14,6 @@ An output of a hackathon with a number of goals in mind.
 
 > Vocabulary 
 
-- Projects - point to an AWS CodeCommit repo and specify where in the repo terraform should be running.
+- Projects - reference to an AWS CodeCommit repo and where in the repo terraform should be running.
 
-- Jobs - a staged execution of the given project via terraform.
-
+- Jobs - staged execution of the given project via terraform.

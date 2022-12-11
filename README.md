@@ -10,34 +10,23 @@
 
 ## Documentation 
 
-Read the docs [here](https://rowlinsonmike.github.io/gaia)
+Read the docs for installation instructions and walkthrough [here](https://rowlinsonmike.github.io/gaia).
 
-## How It Works
+## Overview
 
-1. Clones your terraform repos on CodeCommit.
-2. Uses [kics](https://github.com/Checkmarx/kics) to analyze your terraform.
-3. Presents terrafrom plan and analysis data to you via a web app.
-4. Runs terraform apply if approved via the web app
+GAIA helps manage the lifecycle of terraform deployments stored in AWS CodeCommit.
 
-## Install
+An output of a hackathon with a number of goals in mind.
 
-> Prerequisites
+- static code analysis
+- review of terraform plan
+- auditability
+- simplicity 
 
-Make sure you have credentials for the AWS Account where your CodeCommit repos are. 
-GAIA makes use of [git-remote-codecommit](https://github.com/aws/git-remote-codecommit) for this. An Instance Profile attached to the EC2 instance will work as well.
 
-> Deployment
+> Vocabulary 
 
-1) Clone the repo
+- Projects - reference to an AWS CodeCommit repo and where in the repo terraform should be running.
 
-2) create an .env file in the root of the directory with the following content
+- Jobs - staged execution of the given project via terraform.
 
-```
-SECRET_KEY=SOMELONGSTRINGSHOULDGOHERE12345
-AWS_DEFAULT_REGION=us-east-1 (or whichever you prefer)
-```
-
-3) From the root of the directory execute docker-compose
-```bash
-docker-compose -f prod-docker-compose.yml up d
-```

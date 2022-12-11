@@ -20,3 +20,11 @@ AWS_DEFAULT_REGION=us-east-1 (or whichever you prefer)
 ```bash
 docker-compose -f prod-docker-compose.yml up d
 ```
+
+> ** If running on ubuntu server ** 
+> From the root of the directory run the following **AFTER** bringing up with the compose file.
+> More on this [here](https://stackoverflow.com/questions/45850688/unable-to-open-local-dynamodb-database-file-after-power-outage)
+
+```bash
+sudo chmod 777 ./docker/dynamodb
+```
