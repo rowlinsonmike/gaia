@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/rowlinsonmike/gaia/main/docs/assets/logo.svg" alt="GAIA" width="200">
+  <a href="https://rowlinsonmike.github.io/gaia"><img src="https://raw.githubusercontent.com/rowlinsonmike/gaia/main/docs/assets/logo.svg" alt="GAIA" width="200"></a>
   <br>
   GAIA
   <br>
@@ -8,6 +8,9 @@
 
 <h4 align="center">Oversee your terraforming</h4>
 
+## Documentation 
+
+Read the docs [here](https://rowlinsonmike.github.io/gaia)
 
 ## How It Works
 

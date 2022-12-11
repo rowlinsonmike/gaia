@@ -3,9 +3,8 @@
  --md-primary-fg-color:  #131a0f;
   }
 body{
-  background-image: url("/assets/login-bg.svg");
+  background-image: url("https://raw.githubusercontent.com/rowlinsonmike/gaia/main/docs/assets/login-bg.svg");
   background-size: cover;
-  /* backdrop-filter: blur(10px); */
 }
 
 
