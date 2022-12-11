@@ -1,6 +1,8 @@
 site_name: GAIA
 site_description: 'Oversee your terraforming'
 theme:
+  icon:
+    repo: fontawesome/brands/github-alt
   name: material
   custom_dir: docs/overrides
   font:
@@ -12,6 +14,8 @@ theme:
     - header.autohide
 extra_css:
   - stylesheets/extra.css
+repo_url: https://github.com/rowlinsonmike/gaia
+edit_uri: ''
 nav:
     - Overview: overview.md
     - Install: install.md
