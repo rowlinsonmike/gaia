@@ -1,6 +1,13 @@
-# GAIA
+<h1 align="center">
+  <br>
+  <img src="https://raw.githubusercontent.com/rowlinsonmike/gaia/main/docs/docs/assets/logo.svg" alt="GAIA" width="200">
+  <br>
+  GAIA
+  <br>
+</h1>
 
-Oversee your terraforming.
+<h4 align="center">Oversee your terraforming</h4>
+
 
 ## How It Works
 
