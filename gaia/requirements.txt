@@ -1,0 +1,5 @@
+python-dotenv
+typer
+git-remote-codecommit==1.16
+rq==1.11.0
+boto3

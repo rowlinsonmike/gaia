@@ -1,0 +1,107 @@
+version: '3.8'
+volumes:
+    gaia_data:
+        external: false
+services:
+    redis:
+        image: redis:7.0.4-alpine
+        ports:
+            - 6379:6379
+        networks:
+            - network
+    dynamodb:
+        command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+        image: "amazon/dynamodb-local:latest"
+        ports:
+            - 8000:8000
+        hostname: dynamodb
+        volumes:
+            - "./docker/dynamodb:/home/dynamodblocal/data"
+        working_dir: /home/dynamodblocal
+        networks:
+            - network
+    gaia:
+        build:
+            context: ./gaia
+        volumes:
+            - ./gaia:/app/gaia
+            - $HOME/.aws/:/root/.aws/
+            - gaia_data:/gaia_data
+        environment:
+            - DYNAMO=dynamodb
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+        networks:
+            - network
+        stdin_open: true 
+        tty: true
+    worker:
+        build:
+            context: ./gaia
+            shm_size: '4gb'
+        shm_size: '4gb'
+        command: rq worker
+        volumes:
+            - ./gaia:/app/gaia
+            - $HOME/.aws/:/root/.aws/
+            - gaia_data:/gaia_data
+        environment:
+            - DYNAMO=dynamodb
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+        networks:
+            - network
+    api:
+        build:
+            context: ./server/api
+        command: python3 wsgi.py
+        volumes:
+            - ./server/api:/app
+            - $HOME/.aws/:/root/.aws/
+            - gaia_data:/gaia_data
+        environment:
+            - SECRET_KEY="${SECRET_KEY}"
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - DYNAMO=dynamodb
+        ports:
+            - 5500:5500
+        expose:
+            - 5500
+        networks:
+            - network
+    client:
+        build:
+            context: ./server/client
+        command: npm start
+        volumes:
+            - ./server/client/src:/app/src
+            - ./server/client/public:/app/public
+            - ./server/client/craco.config.js:/app/craco.config.js
+            - ./server/client/jsconfig.json:/app/jsconfig.json
+            - ./server/client/package.json:/app/package.json
+            - ./server/client/package-lock.json:/app/package-lock.json
+        environment:
+            - PORT=3001
+        ports:
+            - 3001:3001
+        expose:
+            - 3001
+        networks:
+            - network
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./d_nginx.conf:/etc/nginx/nginx.conf
+        ports:
+            - 85:85
+        expose:
+            - 85
+        networks:
+            - network
+        depends_on:
+            - api
+            - client
+networks:
+    network:
+        driver: bridge

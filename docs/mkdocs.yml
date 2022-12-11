@@ -1,0 +1,22 @@
+site_name: GAIA
+site_description: 'Oversee your terraforming'
+theme:
+  name: material
+  custom_dir: docs/overrides
+  font:
+    text: Roboto Mono
+  logo: assets/logo.svg
+  palette:
+    primary: white
+  features:
+    - header.autohide
+extra_css:
+  - stylesheets/extra.css
+nav:
+    - Overview: overview.md
+    - Install: install.md
+    - Access: access.md
+    - Add A Project: project.md
+    - Add A Job: job.md
+    - Roadmap: roadmap.md
+    - FAQ: faq.md
