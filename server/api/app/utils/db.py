@@ -187,23 +187,4 @@ class Dynamo(object):
         """Initialize all of the extension settings."""
         app.config.setdefault('DYNAMO_USER_TABLE', app.config.get("DYNAMO_USER_TABLE"))
         app.config.setdefault('DYNAMO_ENABLE_LOCAL', app.config.get("DYNAMO_ENABLE_LOCAL"))
-        app.config.setdefault('AWS_REGION', app.config.get("AWS_REGION",'us-east-1'))
-
-
-
-# conn = DynamoST(Table="Testing")
-
-# conn.load("my nox group:enabled:123123123#us-east-1")
-# print(conn.load('my nox group:GROUP:enabled'))
-# print(conn.load('i-12123123:INSTANCE:my nox group'))
-# print(conn.load('i-11111113:INSTANCE:my test group#started'))
-# print(conn.load('mike:USER:admin'))
-# print(conn.query('my nox group'))
-# print(conn.query(':INSTANCE:my nox group'))
-
-# group groupId "GROUP" 
-# instance instanceId "INSTANCE" groupId
-# instanceId, name, cost, state
-# user userId "USER" createDate
-# name, type
-
+        # app.config.setdefault('AWS_REGION', app.config.get("AWS_REGION",'us-east-1'))

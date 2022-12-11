@@ -13,6 +13,7 @@ GAIA makes use of [git-remote-codecommit](https://github.com/aws/git-remote-code
 
 ```
 SECRET_KEY=SOMELONGSTRINGSHOULDGOHERE12345
+AWS_DEFAULT_REGION=us-east-1 (or whichever you prefer)
 ```
 
 3) From the root of the directory execute docker-compose
