@@ -18,6 +18,7 @@ GAIA helps manage the lifecycle of terraform deployments stored in AWS CodeCommi
 
 ## Key Features 
 
+- 🛒 terraform version selection
 - 🧹 terraform linting
 - 🐛 static code analysis
 - 🗺️ terraform plan capture

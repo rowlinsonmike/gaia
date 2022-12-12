@@ -24,6 +24,8 @@ services:
         build:
             context: ./gaia
             shm_size: '4gb'
+            args:
+                TERRAFORM_VERSION: ${TERRAFORM_VERSION}
         shm_size: '4gb'
         command: rq worker
         volumes:

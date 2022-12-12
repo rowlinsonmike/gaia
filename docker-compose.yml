@@ -23,6 +23,8 @@ services:
     gaia:
         build:
             context: ./gaia
+            args:
+                TERRAFORM_VERSION: ${TERRAFORM_VERSION}
         volumes:
             - ./gaia:/app/gaia
             - $HOME/.aws/:/root/.aws/
@@ -40,6 +42,8 @@ services:
         build:
             context: ./gaia
             shm_size: '4gb'
+            args:
+                TERRAFORM_VERSION: ${TERRAFORM_VERSION}
         shm_size: '4gb'
         command: rq worker
         volumes:

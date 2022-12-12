@@ -9,11 +9,18 @@ GAIA makes use of [git-remote-codecommit](https://github.com/aws/git-remote-code
 
 1) Clone the repo
 
-2) create an .env file in the root of the directory with the following content
+2) create an .env file in the root of the directory with the following content:
+
+- SECRET_KEY - used to hash stored values in flask api
+- AWS_DEFAULT_REGION - AWS operating region
+- TERRAFORM_VERSION - Terraform version to be used by GAIA. The terraform version you include should be available via the following link - `https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip`
+
+**Example .env file**
 
 ```
 SECRET_KEY=SOMELONGSTRINGSHOULDGOHERE12345
-AWS_DEFAULT_REGION=us-east-1 (or whichever you prefer)
+AWS_DEFAULT_REGION=us-east-1
+TERRAFORM_VERSION=1.2.3
 ```
 
 3) From the root of the directory execute docker-compose

@@ -23,7 +23,8 @@ RUN pip install -r requirements.txt --upgrade pip
 RUN curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
 # Install Terraform and Terraform plugins
-RUN wget https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip \
-    && unzip terraform_1.2.3_linux_amd64.zip && rm terraform_1.2.3_linux_amd64.zip \
+ARG TERRAFORM_VERSION
+RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && mv terraform /usr/bin/terraform
 
