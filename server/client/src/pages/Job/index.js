@@ -146,7 +146,7 @@ export default function Job() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Accordion sx={{ width: "100%" }}>
+      <Accordion sx={{ width: "100%", maxWidth: "85vw !important" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon color="secondary" />}
           aria-controls="panel1a-content"
@@ -188,7 +188,7 @@ export default function Job() {
               })}
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{ width: "100%" }}>
+      <Accordion sx={{ width: "100%", maxWidth: "85vw !important" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon color="secondary" />}
           aria-controls="panel1a-content"
@@ -277,7 +277,7 @@ export default function Job() {
               })}
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{ width: "100%" }}>
+      <Accordion sx={{ width: "100%", maxWidth: "85vw !important" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon color="secondary" />}
           aria-controls="panel1a-content"
@@ -300,7 +300,7 @@ export default function Job() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{ width: "100%" }}>
+      <Accordion sx={{ width: "100%", maxWidth: "85vw !important" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon color="secondary" />}
           aria-controls="panel1a-content"
@@ -313,7 +313,11 @@ export default function Job() {
             </Typography>
           </Stack>
         </AccordionSummary>
-        <AccordionDetails sx={{ position: "relative" }}>
+        <AccordionDetails
+          sx={{
+            position: "relative",
+          }}
+        >
           <IconButton
             onClick={() => {
               selectAllGraphData();
@@ -357,7 +361,12 @@ export default function Job() {
             <Icon color="secondary">content_copy</Icon>
           </IconButton>
           <Typography
-            sx={{ whiteSpace: "pre-line" }}
+            sx={{
+              position: "relative",
+              maxWidth: "80vw !important",
+              overflow: "auto",
+              whiteSpace: "pre-line",
+            }}
             variant="body1"
             component="p"
             ref={graphDataEl}
@@ -366,7 +375,7 @@ export default function Job() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{ width: "100%" }}>
+      <Accordion sx={{ width: "100%", maxWidth: "85vw !important" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon color="secondary" />}
           aria-controls="panel1a-content"
@@ -379,7 +388,7 @@ export default function Job() {
             </Typography>
           </Stack>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ overflow: "auto" }}>
           <Typography
             sx={{ whiteSpace: "pre-line" }}
             variant="body1"
