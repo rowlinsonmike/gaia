@@ -323,7 +323,12 @@ export default function Job() {
               selectAllGraphData();
               toast.success("Graph data selected. You can now copy it.");
             }}
-            sx={{ position: "absolute", top: "10px", right: "50px" }}
+            sx={{
+              position: "absolute",
+              top: "10px",
+              right: "50px",
+              zIndex: "200",
+            }}
             color="secondary"
           >
             <Icon color="secondary">select_all</Icon>
@@ -355,7 +360,12 @@ export default function Job() {
                 );
               }
             }}
-            sx={{ position: "absolute", top: "10px", right: "10px" }}
+            sx={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              zIndex: "200",
+            }}
             color="secondary"
           >
             <Icon color="secondary">content_copy</Icon>
