@@ -1,7 +1,5 @@
 # Roadmap
 
-GAIA was concieved entirely within a workday as part of a hackathon. So there will be some **rough edges**. 
-
 Some current objectives and their projected timeline - 
 
 - well architected production deployment (short term)

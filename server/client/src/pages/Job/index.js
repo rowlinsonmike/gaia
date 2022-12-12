@@ -39,6 +39,7 @@ export default function Job() {
   const [data, setData] = React.useState({});
   const [project, setProject] = React.useState({});
   const [edit, setEdit] = React.useState(false);
+  const graphDataEl = React.createRef(null);
   const openEdit = () => setEdit(true);
   const closeEdit = () => setEdit(false);
   const navigate = useNavigate();
@@ -47,6 +48,14 @@ export default function Job() {
   };
   const fetchProject = () => {
     fetcher(`/api/project/${id}`).then((data) => setProject(data || {}));
+  };
+  const selectAllGraphData = () => {
+    if (!graphDataEl?.current) return;
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(graphDataEl.current);
+    selection.removeAllRanges();
+    selection.addRange(range);
   };
   const refresh = () => {
     fetchJob();
@@ -307,6 +316,16 @@ export default function Job() {
         <AccordionDetails sx={{ position: "relative" }}>
           <IconButton
             onClick={() => {
+              selectAllGraphData();
+              toast.success("Graph data selected. You can now copy it.");
+            }}
+            sx={{ position: "absolute", top: "10px", right: "50px" }}
+            color="secondary"
+          >
+            <Icon color="secondary">select_all</Icon>
+          </IconButton>
+          <IconButton
+            onClick={() => {
               try {
                 navigator.clipboard.writeText(data?.graph);
                 toast.custom(
@@ -341,6 +360,7 @@ export default function Job() {
             sx={{ whiteSpace: "pre-line" }}
             variant="body1"
             component="p"
+            ref={graphDataEl}
           >
             {data?.graph || "-"}
           </Typography>

@@ -1,11 +1,11 @@
 # Installation
 
-> Prerequisites
+### Prerequisites
 
 Make sure you have credentials for the AWS Account where your CodeCommit repos are. 
 GAIA makes use of [git-remote-codecommit](https://github.com/aws/git-remote-codecommit) for this. An Instance Profile attached to the EC2 instance will work as well.
 
-> Deployment
+### Deployment
 
 1) Clone the repo
 
@@ -21,9 +21,9 @@ AWS_DEFAULT_REGION=us-east-1 (or whichever you prefer)
 docker-compose -f prod-docker-compose.yml up d
 ```
 
-> ** If running on ubuntu server ** 
-> From the root of the directory run the following **AFTER** bringing up with the compose file.
-> More on this [here](https://stackoverflow.com/questions/45850688/unable-to-open-local-dynamodb-database-file-after-power-outage)
+4) ** If running on ubuntu server! ** 
+From the root of the directory run the following **AFTER** bringing up with the compose file.
+More on this [here](https://stackoverflow.com/questions/45850688/unable-to-open-local-dynamodb-database-file-after-power-outage)
 
 ```bash
 sudo chmod 777 ./docker/dynamodb

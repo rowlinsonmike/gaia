@@ -4,16 +4,18 @@
 
 GAIA helps manage the lifecycle of terraform deployments stored in AWS CodeCommit.
 
-An output of a hackathon with a number of goals in mind.
+### Key Features 
 
-- static code analysis
-- review of terraform plan
-- auditability
-- simplicity 
+- 🧹 terraform linting
+- 🐛 static code analysis
+- 🗺️ terraform plan capture
+- 📊 terraform state visualization
+- ✅ terraform apply capture
+- 📍 user action tracking
 
 
-> Vocabulary 
+### Vocabulary 
 
-- Projects - reference to an AWS CodeCommit repo and where in the repo terraform should be running.
+- **Projects** - reference to an AWS CodeCommit repo and where in the repo terraform should be running.
 
-- Jobs - staged execution of the given project via terraform.
+- **Jobs** - staged execution of the given project via terraform.

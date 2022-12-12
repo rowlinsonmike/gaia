@@ -20,7 +20,7 @@ drawiocsv = [
 "# nodespacing: 40",
 "# levelspacing: 100",
 "# edgespacing: 40",
-"# layout: auto",
+"# layout: horizontalflow",
 "## CSV starts under this line",
 "id,step,fill,stroke,shape,refs"
 ]

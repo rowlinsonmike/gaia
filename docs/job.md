@@ -18,7 +18,7 @@ Once a job has been added, GAIA will begin working on the repo. The following is
 
 - capture terraform plan
 
-- create graph data in mermaid format ([mermaid live editor](https://mermaid-js.github.io/docs/mermaid-live-editor-beta/#/edit))
+- create graph data in [drawio format](https://drawio-app.com/import-from-csv-to-drawio/)
 
 These datapoints are presented back to the end user within the job's page.
 
