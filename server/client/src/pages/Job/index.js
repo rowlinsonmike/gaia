@@ -102,36 +102,6 @@ export default function Job() {
         >
           Rescan
         </Button>
-        <Button
-          disabled={!data?.graph}
-          onClick={() => {
-            try {
-              navigator.clipboard.writeText(data?.graph);
-              toast.custom(
-                <div>
-                  Graph data copied to clipboard! View in{" "}
-                  <a
-                    style={{ color: "#75D701" }}
-                    target="_blank"
-                    href="https://mermaid-js.github.io/docs/mermaid-live-editor-beta/#/edit/"
-                  >
-                    Mermaid live editor!
-                  </a>
-                </div>,
-                {
-                  duration: 3000,
-                }
-              );
-            } catch (e) {
-              toast.error(
-                "Enable this function by running GAIA behind HTTPS or overriding your browser's security."
-              );
-            }
-          }}
-          variant="contained"
-        >
-          Copy Graph
-        </Button>
         <Button onClick={refresh} variant="contained">
           Refresh
         </Button>
@@ -179,9 +149,7 @@ export default function Job() {
             alignItems="center"
             spacing={1}
           >
-            <IconButton color="warning">
-              <Icon color="warning">lightbulb_circle</Icon>
-            </IconButton>
+            <Icon color="warning">lightbulb_circle</Icon>
             <Typography color="text.secondary" gutterBottom>
               Linting
             </Typography>
@@ -223,9 +191,7 @@ export default function Job() {
             alignItems="center"
             spacing={1}
           >
-            <IconButton color="error">
-              <Icon color="error">policy</Icon>
-            </IconButton>
+            <Icon color="error">policy</Icon>
             <Typography color="text.secondary" gutterBottom>
               Static Code Analysis
             </Typography>
@@ -309,9 +275,7 @@ export default function Job() {
           id="panel1a-header"
         >
           <Stack direction="row" alignItems="center" spacing={1}>
-            <IconButton color="info">
-              <Icon color="info">explore</Icon>
-            </IconButton>
+            <Icon color="info">explore</Icon>
             <Typography color="text.secondary" gutterBottom>
               Plan
             </Typography>
@@ -334,9 +298,62 @@ export default function Job() {
           id="panel1a-header"
         >
           <Stack direction="row" alignItems="center" spacing={1}>
-            <IconButton color="secondary">
-              <Icon color="secondary">verified</Icon>
-            </IconButton>
+            <Icon color="warning">account_tree</Icon>
+            <Typography color="text.secondary" gutterBottom>
+              Graph Data
+            </Typography>
+          </Stack>
+        </AccordionSummary>
+        <AccordionDetails sx={{ position: "relative" }}>
+          <IconButton
+            onClick={() => {
+              try {
+                navigator.clipboard.writeText(data?.graph);
+                toast.custom(
+                  <div>
+                    Graph data copied to clipboard! Open{" "}
+                    <a
+                      style={{ color: "#75D701" }}
+                      target="_blank"
+                      href="https://app.diagrams.net/"
+                    >
+                      drawio
+                    </a>{" "}
+                    and paste the csv data in via{" "}
+                    <strong>{"Arrange > Insert > Advanced > CSV"}</strong>
+                  </div>,
+                  {
+                    duration: 6000,
+                  }
+                );
+              } catch (e) {
+                toast.error(
+                  "Enable copy by running GAIA behind HTTPS or overriding your browser's security. You can also manually copy the graph data."
+                );
+              }
+            }}
+            sx={{ position: "absolute", top: "10px", right: "10px" }}
+            color="secondary"
+          >
+            <Icon color="secondary">content_copy</Icon>
+          </IconButton>
+          <Typography
+            sx={{ whiteSpace: "pre-line" }}
+            variant="body1"
+            component="p"
+          >
+            {data?.graph || "-"}
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion sx={{ width: "100%" }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon color="secondary" />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Icon color="secondary">verified</Icon>
             <Typography color="text.secondary" gutterBottom>
               Apply
             </Typography>

@@ -1,6 +1,6 @@
 # Overiew
 
-**Work in Progress! Proceed at your own risk in production.**
+**Work in Progress!**
 
 GAIA helps manage the lifecycle of terraform deployments stored in AWS CodeCommit.
 

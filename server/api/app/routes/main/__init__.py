@@ -157,7 +157,7 @@ def main(guard):
         # if job_d["status"] != "complete" or not os.path.isdir(output_p):
         #     return jsonify(**job_d),200
         try:
-            with open(os.path.join(output_p,"graph.mermaid")) as f:
+            with open(os.path.join(output_p,"drawiocsv")) as f:
                 graph=f.read()
         except: 
             graph = None

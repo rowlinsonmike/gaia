@@ -18,6 +18,7 @@ repo_url: https://github.com/rowlinsonmike/gaia
 edit_uri: ''
 nav:
     - Overview: overview.md
+    - Tech Stack: tech.md
     - Install: install.md
     - Access: access.md
     - Add A Project: project.md

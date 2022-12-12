@@ -6,6 +6,24 @@ import subprocess
 import os, shutil
 import re
 from utils.db import db
+import secrets
+
+drawiocsv = [
+"# label: %step%",
+"# style: shape=%shape%;fillColor=%fill%;strokeColor=%stroke%;",
+"# namespace: csvimport-",
+'# connect: {"from":"refs", "to":"id", "invert":true, "style":"curved=0;endArrow=blockThin;endFill=1;"}',
+"# width: auto",
+"# height: auto",
+"# padding: 15",
+"# ignore: id,shape,fill,stroke,refs",
+"# nodespacing: 40",
+"# levelspacing: 100",
+"# edgespacing: 40",
+"# layout: auto",
+"## CSV starts under this line",
+"id,step,fill,stroke,shape,refs"
+]
 
 app = typer.Typer()
 
@@ -52,20 +70,33 @@ def scan(
   else:
     with open(os.path.join(output_p,'terraform_plan.txt'),'w') as f:
       f.write(ansi_escape.sub('', str(result.stdout.decode())))
-  #mermaid chart
-  graph_f = os.path.join(output_p,'graph.dot')
+  #drawio chart
   result = subprocess.run(['terraform','graph'], cwd=pro_p, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-  with open(os.path.join(output_p,'graph.mermaid'),'w') as d:
-      lines = []
-      for i in result.stdout.decode().split("\n"):
-          if '->' in i and 'root" -> "[root] provider' not in i:
-              v = i.strip()
-              pat = "\[root\]|\"|\(expand\)|\s"
-              v = re.sub(pat,'',i).replace('->','-->').replace("(close)","").replace("\\","")
-              lines.append(f"{v}\n" )
-      lines.append('graph TD\n')
-      lines.reverse()
-      d.writelines(lines)
+  f = open(os.path.join(output_p,'drawiocsv'), 'w') 
+  for l in drawiocsv:
+    f.write(l + "\n")
+  lines = []
+  for i in result.stdout.decode().split("\n"):
+      if '->' in i and 'root" -> "[root] provider' not in i:
+          v = i.strip()
+          pat = "\[root\]|\"|\(expand\)|\s"
+          v = re.sub(pat,'',i).replace("(close)","").replace("\\","").split('->')
+          lines.append(v)
+  data = {}
+  for s,d in lines:
+    d_id = data[d]['id'] if d in data else secrets.token_urlsafe() 
+    s_id = data[s]['id'] if s in data else secrets.token_urlsafe() 
+    if s not in data:
+      data[s] = {"id":s_id,'name':s,'rels':[]}
+    if d not in data:
+      data[d] = {"id":d_id,'name':d,'rels':[]}
+    data[s]['rels'].append(d_id)
+  for o in data.values():
+    if not len(o["rels"]):
+      f.write("{},{},#dae8fc,#6c8ebf,rectangle,\n".format(o["id"],o["name"]))
+    else: 
+      f.write('{},{},#dae8fc,#6c8ebf,rectangle,"{}"\n'.format(o["id"],o["name"],",".join(o["rels"])))
+  f.close()
   conn.put_doc(id,"JOB",status="scanned") 
 
 @app.command()
