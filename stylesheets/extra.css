@@ -1,0 +1,35 @@
+:root > * {
+  --md-default-bg-color: #131a0f;
+ --md-primary-fg-color:  #131a0f;
+  }
+body{
+  background-image: url("https://raw.githubusercontent.com/rowlinsonmike/gaia/main/docs/assets/login-bg.svg");
+  background-size: cover;
+}
+
+
+.md-header,.md-footer{
+background-color: transparent !important;
+}
+.md-footer-meta__inner {
+  display: none !important;
+}
+*{
+  color: #f8f8ff !important;
+}
+a{
+  color: #75D701 !important;
+}
+code{
+  background: rgba(0,0,0,.4) !important;
+}
+::placeholder {
+  color: #f8f8ff !important;
+  opacity: 1; 
+}
+
+.md-logo > img{
+  height:50px !important;
+  width:50px !important;
+}
+  
