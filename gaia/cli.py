@@ -49,10 +49,10 @@ def scan(
   if not os.path.exists(output_p):
     os.mkdir(output_p)
     subprocess.run(['git','clone',f'codecommit://{repo}', repo_d], stdout=subprocess.PIPE)
-    #terraform init
-    result = subprocess.run(['terraform','init'], cwd=pro_p, stdout=subprocess.PIPE)
   else:
     subprocess.run(['git','pull'],cwd=pro_p, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+  #terraform init
+  result = subprocess.run(['terraform','init'], cwd=pro_p, stdout=subprocess.PIPE)
   #tflint
   result = subprocess.run(['tflint','--format','json', pro_p], stdout=subprocess.PIPE)
   tflint_d = json.loads(result.stdout)
@@ -62,7 +62,7 @@ def scan(
   result = subprocess.run(['kics','scan','-p', pro_p, '-o', output_p], stdout=subprocess.PIPE)
   #terraform plan
   ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-  plan_output = os.path.join(repo_d,'tf.plan')
+  plan_output = os.path.join(pro_p,'tf.plan')
   result = subprocess.run(['terraform','plan','-compact-warnings',f'-out={plan_output}'], cwd=pro_p, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
   if result.stderr:
     with open(os.path.join(output_p,'terraform_plan.txt'),'w') as f:
